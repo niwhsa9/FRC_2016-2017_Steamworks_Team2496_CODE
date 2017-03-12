@@ -1,11 +1,11 @@
 package org.usfirst.frc.team2496.systems;
 
-import org.usfirst.frc.team2496.robot.Subsystem;
+import org.usfirst.frc.team2496.robot.ShwinSubsystem;
 import org.usfirst.frc.team2496.systems.*;
 
 import edu.wpi.first.wpilibj.SpeedController;
 
-public class Lifter extends Subsystem {
+public class Lifter extends ShwinSubsystem {
 
 	public Lifter(int id, SpeedController[] motors, int[] revField) {
 		super(id, motors, revField);
@@ -26,11 +26,11 @@ public class Lifter extends Subsystem {
 
 	@Override
 	public void control() {
-		if (js.getRawButton(2) == true) {
+		if (js.getRawButton(6) == true ||  js.getRawButton(4) == true) {
 
 			setAll(1.0);
 
-		} else if ((js.getRawButton(4) == true)) {
+		} else if ((js.getRawButton(11) == true)) {
 			setAll(-1.0);
 		}
 
