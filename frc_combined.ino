@@ -9,9 +9,10 @@ int start =0;
 float breakLenF = 142/3; 
 int breakLen = (int) breakLenF;
 int pos = 0;
+bool rwFlag = false;
 
 unsigned long changeTime = 0;
-bool flag = true;
+int effect = 0;
 
 uint32_t color1[3] = {
   strip.Color(255,0,0), 
@@ -94,7 +95,22 @@ void rainbowEffect() {
 }
 
 void rwbEffect() {
-  
+  rwFlag = !rwFlag;
+  for(int i = 0; i<strip.numPixels()/2; i++) {
+      strip.setPixelColor(i,0,0,255);
+  }
+  for(int i = strip.numPixels()/2; i<strip.numPixels(); i++) {
+    if(rwFlag == true) {
+      if(i%2==0) strip.setPixelColor(i,255,0, 0);
+      else strip.setPixelColor(i,255,255, 255);
+    } else{
+       if((i+1)%2==0) strip.setPixelColor(i,255,0, 0);
+       else strip.setPixelColor(i,255,255, 255);
+    }
+   
+  }
+  strip.show();
+  delay(100);
 }
 
 void clearAll() {
@@ -107,11 +123,14 @@ void loop() {
     if(millis()-changeTime >= 5000) {
       clearAll();
       changeTime = millis();
-      flag = !flag;
+      effect++;
+      if(effect >=3) effect =0;
     }
   
-    if(flag == true) rainbowEffect();
-    else mergeEffect();
+    if(effect == 0) rainbowEffect();
+    else if (effect == 1) mergeEffect();
+    else if (effect == 2) rwbEffect();
+   
 
    
 }
